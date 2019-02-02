@@ -1,0 +1,13 @@
+#!/usr/bin/with-contenv sh
+
+GPHOTOS_UPLOADER_ROOT_CONFIG_DIR=/root/.config
+GPHOTOS_UPLOADER_CONFIG_FILE=/config/config.hjson
+
+mkdir -p ${GPHOTOS_UPLOADER_ROOT_CONFIG_DIR}
+ln -sfn /config/ ${GPHOTOS_UPLOADER_ROOT_CONFIG_DIR}/gphotos-uploader-cli
+
+if [ ! -f "${GPHOTOS_UPLOADER_CONFIG_FILE}" ]; then
+    gphotos-uploader-cli init
+
+    sed -i "s/~\/folder\/to\/upload/\/photos/" "${GPHOTOS_UPLOADER_CONFIG_FILE}"
+fi
