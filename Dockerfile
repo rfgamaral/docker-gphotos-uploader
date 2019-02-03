@@ -13,7 +13,14 @@ RUN \
     apk update && \
     apk add --no-cache --virtual build-dependencies \
         git && \
+    apk add --no-cache \
+        curl && \
     go get -u github.com/nmrshll/gphotos-uploader-cli/cmd/gphotos-uploader-cli && \
+    cd /go/src/github.com/nmrshll && \
+    rm -rf oauth2-noserver && \
+    git clone https://github.com/rfgamaral/oauth2-noserver.git --branch docker && \
+    cd gphotos-uploader-cli/cmd/gphotos-uploader-cli && \
+    go install && \
     apk del build-dependencies && \
     rm -rf /tmp/*
 
