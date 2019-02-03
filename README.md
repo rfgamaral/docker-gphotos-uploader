@@ -7,7 +7,7 @@
 ![docker pulls](https://img.shields.io/docker/pulls/rfgamaral/gphotos-uploader.svg)
 ![docker Stars](https://img.shields.io/docker/stars/rfgamaral/gphotos-uploader.svg)
 
-This repository contains the _Dockerfiles_ and all other files needed to build and run a container with a a background task to mass upload media folders to your [Google Photos](https://photos.google.com) account. The task runs periodically on a predefined schedule and is powered by [`gphotos-uploader-cli`](https://github.com/nmrshll/gphotos-uploader-cli).
+This repository contains the _Dockerfiles_ and all other files needed to create and run a container with a background task to mass upload media folders to your [Google Photos](https://photos.google.com) account. The task runs periodically on a predefined schedule and is powered by [`gphotos-uploader-cli`](https://github.com/nmrshll/gphotos-uploader-cli).
 
 ## Usage
 
@@ -30,7 +30,7 @@ Please check the documentation below for more detailed information on all the co
 
 ### Container configuration parameters
 
-Container images are configured using parameters passed at runtime (such as those above). Some of these parameters are separated by a colon and indicate `<external>:<internal>` respectively.
+Container images are configured using parameters passed at run-time (such as those above). Some of these parameters are separated by a colon and indicate `<external>:<internal>` respectively.
 
 | Parameter | Description |
 | :----: | --- |
@@ -52,7 +52,7 @@ docker exec -it gphotos-uploader gphotos-uploader-cli
 docker exec -it gphotos-uploader /bin/sh
 ```
 
-### To monitor the logs of the container in realtime
+### To monitor the logs of the container in real-time
 
 ```
 docker logs -f gphotos-uploader
