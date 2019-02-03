@@ -1,3 +1,9 @@
+# 🚨 **WARNING** (work-in-progress)
+
+This image is still a work-in-progress and it's not yet fully working due to an upstream issue on `gphotos-uploader-cli`. For more information please read the discussion on:
+
+- https://github.com/nmrshll/gphotos-uploader-cli/issues/15
+
 # rfgamaral/gphotos-uploader
 
 ![docker build](https://img.shields.io/docker/build/rfgamaral/gphotos-uploader.svg)
