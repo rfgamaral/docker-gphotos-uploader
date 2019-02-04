@@ -9,6 +9,8 @@ RUN \
         git && \
     go get -u github.com/nmrshll/gphotos-uploader-cli/cmd/gphotos-uploader-cli && \
     cd /go/src/github.com/nmrshll && \
+    rm -rf gphotos-uploader-cli && \
+    git clone https://github.com/rfgamaral/gphotos-uploader-cli.git --branch docker && \
     rm -rf oauth2-noserver && \
     git clone https://github.com/rfgamaral/oauth2-noserver.git --branch docker && \
     cd gphotos-uploader-cli/cmd/gphotos-uploader-cli && \
