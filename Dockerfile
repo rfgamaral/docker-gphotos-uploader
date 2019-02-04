@@ -18,7 +18,17 @@ FROM alpine:${ALPINE_VERSION}
 
 LABEL maintainer="master@ricardoamaral.net"
 
+ARG BUILD_DATE
 ARG S6_OVERLAY_VERSION
+ARG VCS_REF
+
+LABEL \
+    org.label-schema.build-date="${BUILD_DATE}" \
+    org.label-schema.description="Mass upload media folders to your Google Photos account with this Docker image." \
+    org.label-schema.name="rfgamaral/gphotos-uploader" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.vcs-ref="${VCS_REF}" \
+    org.label-schema.vcs-url="https://github.com/rfgamaral/docker-gphotos-uploader.git"
 
 ENV GPU_SCHEDULE="0 */8 * * *"
 
