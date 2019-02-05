@@ -70,9 +70,9 @@ _The following steps assume the container has been created and it's running. If 
 
     ```
     2019/02/05 09:22:23 Error finding credential
-    2019/02/05 09:22:23 Need to log login into account <ACCOUNT_EMAIL>
+    2019/02/05 09:22:23 Need to log login into account {ACCOUNT_EMAIL}
     2019/02/05 09:22:25 You will now be taken to your browser for authentication or open the url below in a browser.
-    2019/02/05 09:22:25 https://accounts.google.com/o/oauth2/auth?access_type=offline&client_id=<API_CLIENT_ID>&login_hint=<ACCOUNT_EMAIL>&redirect_uri=http%3A%2F%2F127.0.0.1%3A14565%2Foauth%2Fcallback&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fphotoslibrary&state=<STATE>
+    2019/02/05 09:22:25 https://accounts.google.com/o/oauth2/auth?access_type=offline&client_id={API_CLIENT_ID}&login_hint={ACCOUNT_EMAIL}&redirect_uri=http%3A%2F%2F127.0.0.1%3A14565%2Foauth%2Fcallback&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fphotoslibrary&state={STATE}
     2019/02/05 09:22:25 If you are opening the url manually on a different machine you will need to curl the result url on this machine manually.
     2019/02/05 09:22:26 Failed to open browser, you MUST do the manual process.
     2019/02/05 09:22:26 Authentication will be cancelled in 120 seconds
@@ -82,7 +82,7 @@ _The following steps assume the container has been created and it's running. If 
 4. You're now supposed to be redirect to a page that **will not open**. You'll get a message like "unable to connect" or "this site can't be reached", depending on your browser. Worry not, just copy the URL from the browser address the bar and run the following command on a **new terminal** window:
 
     ```
-    docker exec -it gphotos-uploader oauth.sh store-token "<URL_COPIED_FROM_THE_ADDRESS_BAR>"
+    docker exec -it gphotos-uploader oauth.sh store-token "{URL_COPIED_FROM_THE_ADDRESS_BAR}"
     ```
 
     _Please notice the double quotes surrounding the URL, do not remove those._
@@ -90,7 +90,7 @@ _The following steps assume the container has been created and it's running. If 
 5. Once the previous step is done, you should've got the following output on your **first terminal** window:
 
     ```
-    2019/02/05 09:37:41 stored token for user: <ACCOUNT_EMAIL>
+    2019/02/05 09:37:41 stored token for user: {ACCOUNT_EMAIL}
     2019/02/05 09:37:41 Shutting down server...
     Server gracefully stopped
     all uploads done
