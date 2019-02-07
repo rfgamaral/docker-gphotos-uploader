@@ -17,7 +17,7 @@ RUN \
     GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
-FROM alpine:${ALPINE_VERSION}
+FROM amd64/alpine:${ALPINE_VERSION}
 
 LABEL maintainer="master@ricardoamaral.net"
 
