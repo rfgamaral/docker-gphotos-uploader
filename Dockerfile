@@ -10,11 +10,9 @@ RUN \
         git && \
     git clone https://github.com/rfgamaral/gphotos-uploader-cli.git --branch docker && \
     git clone https://github.com/rfgamaral/oauth2-noserver.git --branch docker && \
-    git clone https://github.com/rfgamaral/google-photos-api-client-go.git --branch docker && \
     cd gphotos-uploader-cli && \
     go generate && \
-    cp /go/oauth2-noserver/oauth2ns.go /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20180827223500-16b622b98a45 && \
-    cp /go/google-photos-api-client-go/lib-gphotos/client.go /go/pkg/mod/github.com/nmrshll/google-photos-api-client-go@v0.0.0-20180906090521-a94d2fbcfb40/lib-gphotos && \
+    cp /go/oauth2-noserver/oauth2ns.go /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20190221200101-9bf017bef639 && \
     GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
