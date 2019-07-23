@@ -13,7 +13,7 @@ RUN \
     cd gphotos-uploader-cli && \
     go generate && \
     cp /go/oauth2-noserver/oauth2ns.go /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20190221200101-9bf017bef639 && \
-    GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
+    GOOS=linux GOARCH=arm64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
 FROM arm64v8/alpine:${ALPINE_VERSION}
