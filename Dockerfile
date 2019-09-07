@@ -45,7 +45,7 @@ RUN \
     tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
     rm -rf /tmp/*
 
-COPY --from=builder /go/bin/gphotos-uploader-cli /usr/local/bin/gphotos-uploader-cli
+COPY --from=builder /go/bin/gphotos-uploader-cli /usr/local/bin/
 
 COPY rootfs/ /
 
