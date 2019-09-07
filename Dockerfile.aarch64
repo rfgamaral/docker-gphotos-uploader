@@ -6,8 +6,13 @@ FROM golang:1.11-alpine${ALPINE_VERSION} AS builder
 RUN \
     apk update && \
     apk add --no-cache --virtual build-dependencies \
+        curl \
         g++ \
         git && \
+    export QEMU_USER_STATIC_LATEST_TAG=$(curl -s https://api.github.com/repos/multiarch/qemu-user-static/tags \
+        | grep 'name.*v[0-9]' | head -n 1 | cut -d '"' -f 4) && \
+    curl -SL "https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_USER_STATIC_LATEST_TAG}/x86_64_qemu-aarch64-static.tar.gz" \
+        | tar xzv --directory /go/bin && \
     git clone https://github.com/rfgamaral/gphotos-uploader-cli.git --branch docker && \
     git clone https://github.com/rfgamaral/oauth2-noserver.git --branch docker && \
     cd gphotos-uploader-cli && \
@@ -36,7 +41,7 @@ LABEL \
 
 ENV GPU_SCHEDULE="0 */8 * * *"
 
-COPY qemu-aarch64-static /usr/bin/
+COPY --from=builder /go/bin/qemu-aarch64-static /usr/bin/
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-aarch64.tar.gz /tmp/
 
