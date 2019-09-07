@@ -42,7 +42,7 @@ RUN \
     apk update && \
     apk add --no-cache \
         curl && \
-    tar xzf /tmp/s6-overlay-amd64.tar.gz -C / && \
+    tar xzf /tmp/s6-overlay-amd64.tar.gz --directory / && \
     rm -rf /tmp/*
 
 COPY --from=builder /go/bin/gphotos-uploader-cli /usr/local/bin/
