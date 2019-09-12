@@ -1,0 +1,99 @@
+name: Docker Images CI
+
+on:
+  push:
+    branches:
+      - preview
+    tags:
+      - 'v*'
+
+jobs:
+
+  build-amd64:
+
+    name: Build 'amd64' image
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Login to Docker Hub registry
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | \
+            docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build and publish image
+        uses: ./.github/actions/docker-build-image
+        with:
+          dockerfile: Dockerfile
+          architecture: amd64
+
+  build-arm32v7:
+
+    name: Build 'arm32v7' image
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Login to Docker Hub registry
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | \
+            docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build and publish image
+        uses: ./.github/actions/docker-build-image
+        with:
+          dockerfile: Dockerfile.armhf
+          architecture: arm32v7
+
+  build-arm64v8:
+
+    name: Build 'arm64v8' image
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Login to Docker Hub registry
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | \
+            docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Build and publish image
+        uses: ./.github/actions/docker-build-image
+        with:
+          dockerfile: Dockerfile.aarch64
+          architecture: arm64v8
+
+  publish-manifest:
+
+    name: Publish multiarch manifest
+    needs:
+      - build-amd64
+      - build-arm32v7
+      - build-arm64v8
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+
+      - name: Login to Docker Hub registry
+        run: |
+          echo "${{ secrets.DOCKER_PASSWORD }}" | \
+            docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+      - name: Create and publish manifest list
+        uses: ./.github/actions/docker-create-manifest
+        env:
+          DOCKER_CLI_EXPERIMENTAL: enabled
+        with:
+          multiarch: '["amd64", "arm32v7", "arm64v8"]'

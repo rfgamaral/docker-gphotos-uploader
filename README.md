@@ -1,7 +1,5 @@
 # rfgamaral/gphotos-uploader
 
-![docker build](https://img.shields.io/docker/cloud/build/rfgamaral/gphotos-uploader.svg)
-![docker build](https://img.shields.io/docker/cloud/automated/rfgamaral/gphotos-uploader.svg)
 ![image size](https://img.shields.io/microbadger/image-size/rfgamaral/gphotos-uploader.svg)
 ![layers](https://img.shields.io/microbadger/layers/rfgamaral/gphotos-uploader.svg)
 ![docker pulls](https://img.shields.io/docker/pulls/rfgamaral/gphotos-uploader.svg)
