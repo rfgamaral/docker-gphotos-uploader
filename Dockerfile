@@ -3,18 +3,17 @@ ARG S6_OVERLAY_VERSION="1.22.1.0"
 
 FROM golang:1.11-alpine${ALPINE_VERSION} AS builder
 
+COPY patches/*.patch /tmp/
+
 RUN \
     apk update && \
     apk add --no-cache --virtual build-dependencies \
         g++ \
         git && \
-    git clone https://github.com/rfgamaral/gphotos-uploader-cli.git --branch docker && \
-    git clone https://github.com/rfgamaral/oauth2-noserver.git --branch docker && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1-pre --single-branch && \
     cd gphotos-uploader-cli && \
-    sed -i "s/~\/\.config\/gphotos-uploader-cli/\/config/" cmd/root.go && \
-    sed -i "s/~\/\.config\/gphotos-uploader-cli/\/config/" config/config.go && \
+    git apply --ignore-whitespace /tmp/*.patch --verbose && \
     go generate && \
-    cp /go/oauth2-noserver/oauth2ns.go /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20190221200101-9bf017bef639 && \
     GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
