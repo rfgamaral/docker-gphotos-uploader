@@ -14,11 +14,11 @@ This image supports multiple architectures such as `x86-64`, `arm64` and `armhf`
 
 The architectures supported by this image are:
 
-| Architecture | Tag |
-| :----: | --- |
-| x86-64 | amd64-latest |
-| arm64 | arm64v8-latest |
-| armhf | arm32v7-latest |
+| Architecture | Tag (`latest`) | Tag (`x.y.z`) | Tag (`preview`) |
+| :----: | --- | --- | --- |
+| x86-64 | `amd64-latest` | `amd64-x.y.z` | `amd64-preview` |
+| arm64 | `arm64v8-latest` | `arm64v8-x.y.z` | `arm64v8-preview` |
+| armhf | `arm32v7-latest` | `arm32v7-x.y.z` | `arm32v7-preview` |
 
 ## Usage
 
