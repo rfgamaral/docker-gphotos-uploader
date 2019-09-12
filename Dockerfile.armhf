@@ -22,7 +22,6 @@ RUN \
     cd gphotos-uploader-cli && \
     git apply --ignore-whitespace /tmp/*.patch --verbose && \
     go generate && \
-    cp /go/oauth2-noserver/oauth2ns.go /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20190221200101-9bf017bef639 && \
     GOOS=linux GOARCH=arm GOARM=7 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
