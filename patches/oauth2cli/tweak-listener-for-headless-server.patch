@@ -21,6 +21,6 @@ index c76ad89..0f58214 100644
 +	if err != nil {
 +		return nil, xerrors.Errorf("could not resolve %s: %w", host, err)
 +	}
-+	url := fmt.Sprintf("http://%s.nip.io:%s", ip, p)
++	url := fmt.Sprintf("http://%s.nip.io:%s", ip[0], p)
  	return &localhostListener{l, url}, nil
  }
