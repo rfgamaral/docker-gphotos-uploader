@@ -1,7 +1,7 @@
 ARG ALPINE_VERSION="3.10"
 ARG S6_OVERLAY_VERSION="1.22.1.0"
 
-FROM golang:1.11-alpine${ALPINE_VERSION} AS builder
+FROM golang:1.12-alpine${ALPINE_VERSION} AS builder
 
 COPY patches/*.patch /tmp/
 
