@@ -10,7 +10,7 @@ RUN \
     apk add --no-cache --virtual build-dependencies \
         g++ \
         git && \
-    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1-pre --single-branch && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1 --single-branch && \
     cd gphotos-uploader-cli && \
     git apply --ignore-whitespace /tmp/*.patch --verbose && \
     go generate && \

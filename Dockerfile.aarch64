@@ -18,7 +18,7 @@ RUN \
         | grep 'name.*v[0-9]' | head -n 1 | cut -d '"' -f 4) && \
     curl -SL "https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_USER_STATIC_LATEST_TAG}/x86_64_qemu-aarch64-static.tar.gz" \
         | tar xzv --directory /go/bin && \
-    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1-pre --single-branch && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1 --single-branch && \
     cd gphotos-uploader-cli && \
     git apply --ignore-whitespace /tmp/*.patch --verbose && \
     go generate && \
