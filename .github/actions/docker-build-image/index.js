@@ -17,8 +17,8 @@ const exec = require('../.modules/@actions/exec');
 
         await exec.exec('docker build .', [
             `--file=${dockerfile}`,
-            `--build-arg=BUILD_DATE="${new Date().toISOString()}"`,
-            `--build-arg=VCS_REF="${process.env.GITHUB_SHA.slice(0, 7)}`,
+            `--build-arg=BUILD_DATE=${new Date().toISOString()}`,
+            `--build-arg=VCS_REF=${process.env.GITHUB_SHA.slice(0, 7)}`,
             `--tag=${image}:${tag}`,
             '--no-cache'
         ]);
