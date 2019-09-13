@@ -11,9 +11,12 @@ RUN \
         g++ \
         git && \
     git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1 --single-branch && \
-    cd gphotos-uploader-cli && \
+    cd /go/gphotos-uploader-cli && \
     git apply --ignore-whitespace /tmp/patches/gphotos-uploader-cli/*.patch --verbose && \
     go generate && \
+    cd /go/pkg/mod/github.com/int128/oauth2cli@* && \
+    git apply --ignore-whitespace /tmp/patches/oauth2cli/*.patch --verbose && \
+    cd /go/gphotos-uploader-cli && \
     GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 

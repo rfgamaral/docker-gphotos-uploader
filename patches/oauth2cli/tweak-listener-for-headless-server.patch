@@ -1,0 +1,21 @@
+diff --git a/listener.go b/listener.go
+index c76ad89..c47f0a2 100644
+--- a/listener.go
++++ b/listener.go
+@@ -33,7 +33,7 @@ func newLocalhostListener(ports []int) (*localhostListener, error) {
+ }
+
+ func newLocalhostListenerAt(port int) (*localhostListener, error) {
+-	l, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", port))
++	l, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+ 	if err != nil {
+ 		return nil, xerrors.Errorf("could not listen: %w", err)
+ 	}
+@@ -42,6 +42,6 @@ func newLocalhostListenerAt(port int) (*localhostListener, error) {
+ 	if err != nil {
+ 		return nil, xerrors.Errorf("could not parse the address %s: %w", addr, err)
+ 	}
+-	url := fmt.Sprintf("http://localhost:%s", p)
++	url := fmt.Sprintf("http://lvh.me:%s", p)
+ 	return &localhostListener{l, url}, nil
+ }

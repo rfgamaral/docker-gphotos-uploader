@@ -1,0 +1,16 @@
+diff --git a/cmd/http.go b/cmd/http.go
+index 4898e9a..5a4549d 100644
+--- a/cmd/http.go
++++ b/cmd/http.go
+@@ -36,9 +36,11 @@ func newOAuth2Client(ctx context.Context, tkm *tokenstore.Service, oauth2Config
+ 	case token == nil:
+ 		token, err = oauth2cli.GetToken(ctx, oauth2cli.Config{
+ 			OAuth2Config: oauth2Config,
++			SkipOpenBrowser: true,
+ 			ShowLocalServerURL: func(url string) {
+ 				log.Printf("Open %s", url)
+ 			},
++			LocalServerPort: []int{29070},
+ 			LocalServerSuccessHTML: successPage,
+ 		})
+ 		if err != nil {
