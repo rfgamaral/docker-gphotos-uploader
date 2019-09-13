@@ -17,7 +17,7 @@ index c76ad89..0f58214 100644
  	}
 -	url := fmt.Sprintf("http://localhost:%s", p)
 +	host := "host.docker.internal"
-+	ip, err := net.LookupIP(host)
++	ip, err := net.LookupHost(host)
 +	if err != nil {
 +		return nil, xerrors.Errorf("could not resolve %s: %w", host, err)
 +	}
