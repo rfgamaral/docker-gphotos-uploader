@@ -6,7 +6,7 @@ FROM golang:1.12-alpine${ALPINE_VERSION} AS builder
 ENV QEMU_USER_STATIC_DOWNLOAD_URL https://github.com/multiarch/qemu-user-static/releases/download
 ENV QEMU_USER_STATIC_TAGS_API https://api.github.com/repos/multiarch/qemu-user-static/tags
 
-COPY patches/*.patch /tmp/
+COPY patches /tmp/patches
 
 RUN \
     apk update && \
@@ -20,7 +20,7 @@ RUN \
         | tar xzv --directory /go/bin && \
     git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1 --single-branch && \
     cd gphotos-uploader-cli && \
-    git apply --ignore-whitespace /tmp/*.patch --verbose && \
+    git apply --ignore-whitespace /tmp/patches/gphotos-uploader-cli/*.patch --verbose && \
     go generate && \
     GOOS=linux GOARCH=arm GOARM=7 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies

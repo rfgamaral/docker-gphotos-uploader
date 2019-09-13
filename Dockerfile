@@ -3,7 +3,7 @@ ARG S6_OVERLAY_VERSION="1.22.1.0"
 
 FROM golang:1.12-alpine${ALPINE_VERSION} AS builder
 
-COPY patches/*.patch /tmp/
+COPY patches /tmp/patches
 
 RUN \
     apk update && \
@@ -12,7 +12,7 @@ RUN \
         git && \
     git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1 --single-branch && \
     cd gphotos-uploader-cli && \
-    git apply --ignore-whitespace /tmp/*.patch --verbose && \
+    git apply --ignore-whitespace /tmp/patches/gphotos-uploader-cli/*.patch --verbose && \
     go generate && \
     GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
