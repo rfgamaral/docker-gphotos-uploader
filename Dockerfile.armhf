@@ -51,9 +51,6 @@ COPY --from=builder /go/bin/qemu-arm-static /usr/bin/
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-arm.tar.gz /tmp/
 
 RUN \
-    apk update && \
-    apk add --no-cache \
-        curl && \
     tar xzf /tmp/s6-overlay-arm.tar.gz --directory / && \
     rm -rf /tmp/*
 
