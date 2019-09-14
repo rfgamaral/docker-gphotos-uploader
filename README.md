@@ -47,9 +47,9 @@ Please refer to the following table for all available configuration paramaters t
 | Parameter | Required | Description |
 | :----: | --- | --- |
 | `-e GPU_SCHEDULE="<SCHEDULE_EXPRESSION>"` | | Background task schedule expression (defaults to every 8 hours).<br>See [crontab.guru](https://crontab.guru/) for help with the schedule expression. |
-| `-p <EXTERNAL_PORT>:29070` | <div style="text-align: center">✔</div> | Publish the container's `29070` internal port to the host as `<EXTERNAL_PORT>`.<br>This is necessary for the Authentication process (more on that below). |
-| `-v <PATH_TO_CONFIGURATION>:/config` | <div style="text-align: center">✔</div> | Absolute host path to store `gphotos-uploader-cli` configuration. |
-| `-v <PATH_TO_PHOTOS_LIBRARY>:/photos` | <div style="text-align: center">✔</div> | Absolute host path for the photos library source folder. |
+| `-p <EXTERNAL_PORT>:29070` | <div align="center">✔</div> | Publish the container's `29070` internal port to the host as `<EXTERNAL_PORT>`.<br>This is necessary for the Authentication process (more on that below). |
+| `-v <PATH_TO_CONFIGURATION>:/config` | <div align="center">✔</div> | Absolute host path to store `gphotos-uploader-cli` configuration. |
+| `-v <PATH_TO_PHOTOS_LIBRARY>:/photos` | <div align="center">✔</div> | Absolute host path for the photos library source folder. |
 | `--add-host host.docker.internal:<DOCKER_HOST_IP>` |  | Map the Docker host IP to `host.docker.internal`.<br>This might be necessary for the Authentication process (more on that below). |
 
 ## Authentication
