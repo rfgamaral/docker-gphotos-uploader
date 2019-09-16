@@ -41,6 +41,10 @@ ENV GPU_SCHEDULE="0 */8 * * *"
 ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-amd64.tar.gz /tmp/
 
 RUN \
+    apk update && \
+    apk add --no-cache \
+        ca-certificates \
+        openssl && \
     tar xzf /tmp/s6-overlay-amd64.tar.gz --directory / && \
     rm -rf /tmp/*
 
