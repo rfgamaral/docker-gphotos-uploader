@@ -1,0 +1,62 @@
+From 53f597050fa07e340d32586832bcc0151df74122 Mon Sep 17 00:00:00 2001
+From: pacoorozco <paco@pacoorozco.info>
+Date: Fri, 20 Sep 2019 18:26:37 +0200
+Subject: [PATCH] use modified oauth2cli
+
+Signed-off-by: pacoorozco <paco@pacoorozco.info>
+---
+ cmd/http.go | 8 +++++---
+ go.mod      | 3 ++-
+ go.sum      | 4 ----
+ 3 files changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/cmd/http.go b/cmd/http.go
+index bc04f1f..d814ba6 100644
+--- a/cmd/http.go
++++ b/cmd/http.go
+@@ -90,9 +90,11 @@ func obtainOAuthTokenFromAuthServer(ctx context.Context, oauth2Config oauth2.Con
+ 	eg.Go(func() error {
+ 		defer close(ready)
+ 		token, err = oauth2cli.GetToken(ctx, oauth2cli.Config{
+-			OAuth2Config:           oauth2Config,
+-			LocalServerReadyChan:   ready,
+-			LocalServerSuccessHTML: successPage,
++			OAuth2Config:             oauth2Config,
++			LocalServerReadyChan:     ready,
++			LocalServerSuccessHTML:   successPage,
++			LocalServerListenAnyHost: true,
++			LocalServerPort:          []int{12345},
+ 		})
+ 		return err
+ 	})
+diff --git a/go.mod b/go.mod
+index 45c0f44..25e488e 100644
+--- a/go.mod
++++ b/go.mod
+@@ -18,6 +18,7 @@ require (
+ 	golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
+ 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
+ 	golang.org/x/sync v0.0.0-20190423024810-112230192c58
+-	golang.org/x/xerrors v0.0.0-20190513163551-3ee3066db522
+ 	gopkg.in/mgo.v2 v2.0.0-20190816093944-a6b53ec6cb22 // indirect
+ )
++
++replace github.com/int128/oauth2cli => ../oauth2cli
+diff --git a/go.sum b/go.sum
+index 7d8a1c0..104200e 100644
+--- a/go.sum
++++ b/go.sum
+@@ -64,10 +64,6 @@ github.com/hpcloud/tail v1.0.0 h1:nfCOvKYfkgYP8hkirhJocXT2+zOD8yUNjXaWfTlyFKI=
+ github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
+ github.com/inconshreveable/mousetrap v1.0.0 h1:Z8tu5sraLXCXIcARxBp/8cbvlwVa7Z1NHg9XEKhtSvM=
+ github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
+-github.com/int128/oauth2cli v1.4.1 h1:IsaYMafEDS1jyArxYdmksw+nMsNxiYCQzdkPj3QF9BY=
+-github.com/int128/oauth2cli v1.4.1/go.mod h1:CMJjyUSgKiobye1M/9byFACOjtB2LRo2mo7boklEKlI=
+-github.com/int128/oauth2cli v1.5.0 h1:EOBMCWfroql1hPqPhP+EtDhgO7y6ClFZ/NwJEpBCo1s=
+-github.com/int128/oauth2cli v1.5.0/go.mod h1:ivzuzt+k+bpwLI1Mb1bRq8PiBvwLBsO8L7tX2F9iKKA=
+ github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
+ github.com/juju/errors v0.0.0-20190207033735-e65537c515d7 h1:dMIPRDg6gi7CUp0Kj2+HxqJ5kTr1iAdzsXYIrLCNSmU=
+ github.com/juju/errors v0.0.0-20190207033735-e65537c515d7/go.mod h1:W54LbzXuIE0boCoNJfwqpmkKJ1O4TCTZMetAt6jGk7Q=
+-- 
+2.17.1
+

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+gphotos-uploader-cli.bin --config /config "$@"

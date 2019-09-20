@@ -3,20 +3,29 @@ ARG S6_OVERLAY_VERSION="1.22.1.0"
 
 FROM golang:1.11-alpine${ALPINE_VERSION} AS builder
 
+ENV GPHOTOS_UPLOADER_VERSION v0.8.3
+ENV OAUTH2CLI_VERSION v1.5.0
+
+COPY patches /tmp/patches
+
 RUN \
     apk update && \
     apk add --no-cache --virtual build-dependencies \
         g++ \
-        git && \
-    git clone https://github.com/rfgamaral/gphotos-uploader-cli.git --branch docker && \
-    git clone https://github.com/rfgamaral/oauth2-noserver.git --branch docker && \
+        git \
+        make && \
+    rm -rf /var/cache/apk/* && \
+    git clone https://github.com/int128/oauth2cli.git && \
+    cd oauth2cli && \
+    git checkout ${OAUTH2CLI_VERSION} && \
+    git apply /tmp/patches/oauth2cli/*_${OAUTH2CLI_VERSION}.patch && \
+    cd .. && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git && \
     cd gphotos-uploader-cli && \
-    sed -i "s/~\/\.config\/gphotos-uploader-cli/\/config/" cmd/root.go && \
-    sed -i "s/~\/\.config\/gphotos-uploader-cli/\/config/" config/config.go && \
-    go generate && \
-    cp /go/oauth2-noserver/oauth2ns.go /go/pkg/mod/github.com/nmrshll/oauth2-noserver@v0.0.0-20190221200101-9bf017bef639 && \
-    GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
-    apk del build-dependencies
+    git checkout ${GPHOTOS_UPLOADER_VERSION} && \
+    git apply /tmp/patches/gphotos-uploader-cli/*_${GPHOTOS_UPLOADER_VERSION}.patch && \
+    make build VERSION="${GPHOTOS_UPLOADER_VERSION}-docker" && \
+    cp gphotos-uploader-cli /go/bin/
 
 FROM amd64/alpine:${ALPINE_VERSION}
 
@@ -41,11 +50,14 @@ ADD https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLA
 RUN \
     apk update && \
     apk add --no-cache \
+        bash \
+        ca-certificates \
         curl && \
+    rm -rf /var/cache/apk/* && \
     tar xzf /tmp/s6-overlay-amd64.tar.gz --directory / && \
     rm -rf /tmp/*
 
-COPY --from=builder /go/bin/gphotos-uploader-cli /usr/local/bin/
+COPY --from=builder /go/bin/gphotos-uploader-cli /usr/local/bin/gphotos-uploader-cli.bin
 
 COPY rootfs/ /
 

@@ -4,6 +4,4 @@ GPHOTOS_UPLOADER_CONFIG_FILE=/config/config.hjson
 
 if [ ! -f "${GPHOTOS_UPLOADER_CONFIG_FILE}" ]; then
     gphotos-uploader-cli init
-
-    sed -i "s/~\/folder\/to\/upload/\/photos/" "${GPHOTOS_UPLOADER_CONFIG_FILE}"
 fi
