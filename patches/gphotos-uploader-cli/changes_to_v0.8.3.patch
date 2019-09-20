@@ -1,7 +1,7 @@
 From 53f597050fa07e340d32586832bcc0151df74122 Mon Sep 17 00:00:00 2001
 From: pacoorozco <paco@pacoorozco.info>
 Date: Fri, 20 Sep 2019 18:26:37 +0200
-Subject: [PATCH] use modified oauth2cli
+Subject: [PATCH 1/2] use modified oauth2cli
 
 Signed-off-by: pacoorozco <paco@pacoorozco.info>
 ---
@@ -57,6 +57,50 @@ index 7d8a1c0..104200e 100644
  github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
  github.com/juju/errors v0.0.0-20190207033735-e65537c515d7 h1:dMIPRDg6gi7CUp0Kj2+HxqJ5kTr1iAdzsXYIrLCNSmU=
  github.com/juju/errors v0.0.0-20190207033735-e65537c515d7/go.mod h1:W54LbzXuIE0boCoNJfwqpmkKJ1O4TCTZMetAt6jGk7Q=
+-- 
+2.17.1
+
+
+From 00d9e3d3116583d12001444dd3b94ac328f28d44 Mon Sep 17 00:00:00 2001
+From: pacoorozco <paco@pacoorozco.info>
+Date: Fri, 20 Sep 2019 18:47:22 +0200
+Subject: [PATCH 2/2] remove terminal prompt
+
+Signed-off-by: pacoorozco <paco@pacoorozco.info>
+---
+ datastore/tokenstore/repository_keyring.go | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
+
+diff --git a/datastore/tokenstore/repository_keyring.go b/datastore/tokenstore/repository_keyring.go
+index a31c545..8ba34df 100644
+--- a/datastore/tokenstore/repository_keyring.go
++++ b/datastore/tokenstore/repository_keyring.go
+@@ -2,11 +2,8 @@ package tokenstore
+ 
+ import (
+ 	"encoding/json"
+-	"fmt"
+-	"os"
+ 
+ 	"github.com/99designs/keyring"
+-	"golang.org/x/crypto/ssh/terminal"
+ 	"golang.org/x/oauth2"
+ )
+ 
+@@ -121,11 +118,6 @@ func (r *KeyringRepository) getToken(email string) (oauth2.Token, error) {
+ }
+ 
+ func terminalPrompt(prompt string) (string, error) {
+-	fmt.Printf("%s: ", prompt)
+-	b, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+-	if err != nil {
+-		return "", err
+-	}
+-	fmt.Println()
+-	return string(b), nil
++	_ = prompt
++	return "", nil
+ }
 -- 
 2.17.1
 
