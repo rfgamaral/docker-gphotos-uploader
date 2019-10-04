@@ -5,6 +5,9 @@ FROM golang:1.12-alpine${ALPINE_VERSION} AS builder
 
 ARG GPHOTOS_UPLOADER_CLI_VERSION="0.8.4"
 
+ENV GOOS=linux \
+    GOARCH=amd64
+
 COPY patches /tmp/patches
 
 RUN \
@@ -20,7 +23,7 @@ RUN \
     git apply /tmp/patches/gphotos-uploader-cli/*.patch \
         --ignore-whitespace \
         --verbose && \
-    GOOS=linux GOARCH=amd64 make build VERSION="${GPHOTOS_UPLOADER_CLI_VERSION}-docker" && \
+    make build VERSION="${GPHOTOS_UPLOADER_CLI_VERSION}-docker" && \
     apk del build-dependencies
 
 FROM amd64/alpine:${ALPINE_VERSION}
