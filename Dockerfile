@@ -11,7 +11,8 @@ RUN \
     apk update && \
     apk add --no-cache --virtual build-dependencies \
         g++ \
-        git && \
+        git \
+        make && \
     git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git \
         --branch v${GPHOTOS_UPLOADER_CLI_VERSION} \
         --single-branch && \
@@ -19,7 +20,7 @@ RUN \
     git apply /tmp/patches/gphotos-uploader-cli/*.patch \
         --ignore-whitespace \
         --verbose && \
-    GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
+    GOOS=linux GOARCH=amd64 make build VERSION="${GPHOTOS_UPLOADER_CLI_VERSION}-docker" && \
     apk del build-dependencies
 
 FROM amd64/alpine:${ALPINE_VERSION}
@@ -50,7 +51,7 @@ RUN \
     tar xzf /tmp/s6-overlay-amd64.tar.gz --directory / && \
     rm -rf /tmp/*
 
-COPY --from=builder /go/bin/gphotos-uploader-cli /usr/local/bin/
+COPY --from=builder /go/gphotos-uploader-cli /usr/local/bin/
 
 COPY rootfs/ /
 
