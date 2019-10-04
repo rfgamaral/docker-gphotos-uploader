@@ -12,9 +12,13 @@ RUN \
     apk add --no-cache --virtual build-dependencies \
         g++ \
         git && \
-    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v${GPHOTOS_UPLOADER_CLI_VERSION} --single-branch && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git \
+        --branch v${GPHOTOS_UPLOADER_CLI_VERSION} \
+        --single-branch && \
     cd /go/gphotos-uploader-cli && \
-    git apply /tmp/patches/gphotos-uploader-cli/*.patch --ignore-whitespace --verbose && \
+    git apply /tmp/patches/gphotos-uploader-cli/*.patch \
+        --ignore-whitespace \
+        --verbose && \
     GOOS=linux GOARCH=amd64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 

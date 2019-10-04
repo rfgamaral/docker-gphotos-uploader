@@ -20,9 +20,13 @@ RUN \
         | grep 'name.*v[0-9]' | head -n 1 | cut -d '"' -f 4) && \
     curl -SL "https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_USER_STATIC_LATEST_TAG}/x86_64_qemu-aarch64-static.tar.gz" \
         | tar xzv --directory /go/bin && \
-    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v${GPHOTOS_UPLOADER_CLI_VERSION} --single-branch && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git \
+        --branch v${GPHOTOS_UPLOADER_CLI_VERSION} \
+        --single-branch && \
     cd /go/gphotos-uploader-cli && \
-    git apply /tmp/patches/gphotos-uploader-cli/*.patch --ignore-whitespace --verbose && \
+    git apply /tmp/patches/gphotos-uploader-cli/*.patch \
+        --ignore-whitespace \
+        --verbose && \
     GOOS=linux GOARCH=arm64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
