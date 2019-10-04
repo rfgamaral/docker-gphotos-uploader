@@ -3,6 +3,8 @@ ARG S6_OVERLAY_VERSION="1.22.1.0"
 
 FROM golang:1.12-alpine${ALPINE_VERSION} AS builder
 
+ARG GPHOTOS_UPLOADER_CLI_VERSION="0.8.4"
+
 ENV QEMU_USER_STATIC_DOWNLOAD_URL https://github.com/multiarch/qemu-user-static/releases/download
 ENV QEMU_USER_STATIC_TAGS_API https://api.github.com/repos/multiarch/qemu-user-static/tags
 
@@ -18,13 +20,9 @@ RUN \
         | grep 'name.*v[0-9]' | head -n 1 | cut -d '"' -f 4) && \
     curl -SL "https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_USER_STATIC_LATEST_TAG}/x86_64_qemu-aarch64-static.tar.gz" \
         | tar xzv --directory /go/bin && \
-    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v0.8.1 --single-branch && \
+    git clone https://github.com/gphotosuploader/gphotos-uploader-cli.git --branch v${GPHOTOS_UPLOADER_CLI_VERSION} --single-branch && \
     cd /go/gphotos-uploader-cli && \
-    git apply --ignore-whitespace /tmp/patches/gphotos-uploader-cli/*.patch --verbose && \
-    go generate && \
-    cd /go/pkg/mod/github.com/int128/oauth2cli@* && \
-    git apply --ignore-whitespace /tmp/patches/oauth2cli/*.patch --verbose && \
-    cd /go/gphotos-uploader-cli && \
+    git apply /tmp/patches/gphotos-uploader-cli/*.patch --ignore-whitespace --verbose && \
     GOOS=linux GOARCH=arm64 go build -ldflags='-w -s' -o /go/bin/gphotos-uploader-cli && \
     apk del build-dependencies
 
