@@ -86,7 +86,7 @@ _The following steps assume the container has been created and it's running. If 
     2019/10/04 16:58:50 Browser was not detected. Complete the authorization browsing to: http://localhost:29070
     ```
 
-    Open the authorization URL in your main browser and allow _rfgamaral/gphotos-uploader_ access to your Google Account to "View and manage your Google Photos library".
+    Open the authorization URL in your main browser and allow **docker-gphotos-uploader** access to your Google Account to "View and manage your Google Photos library". Please note that you'll have to replace `localhost` with the Docker host network IP address if accessing from a different machine in your local network.
 
 4. Once the authentication process is complete you should get a green box with "Success!" with an additional message saying that you are authenticated and your terminal window should output something similiar to the following:
 
