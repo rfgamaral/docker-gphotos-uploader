@@ -1,8 +1,8 @@
 diff --git a/config/config.go b/config/config.go
-index 9439361..d1a0023 100644
+index 82464d3..3b6ce60 100644
 --- a/config/config.go
 +++ b/config/config.go
-@@ -22,7 +22,7 @@ func defaultSettings() *Config {
+@@ -24,7 +24,7 @@ func defaultSettings() *Config {
  	c.Jobs = make([]FolderUploadJob, 0)
  	job := FolderUploadJob{
  		Account:      "youremail@gmail.com",

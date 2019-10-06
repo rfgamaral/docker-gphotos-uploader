@@ -1,24 +1,24 @@
 diff --git a/cmd/root.go b/cmd/root.go
-index 6c3d6c7..41b9124 100644
+index 6088b22..053ae5f 100644
 --- a/cmd/root.go
 +++ b/cmd/root.go
-@@ -19,7 +19,7 @@ import (
+@@ -20,7 +20,7 @@ import (
  	"github.com/gphotosuploader/gphotos-uploader-cli/upload"
  )
-
+ 
 -const defaultCfgDir = "~/.config/gphotos-uploader-cli"
 +const defaultCfgDir = "/config"
-
+ 
  var cfgDir string
-
+ 
 diff --git a/config/config.go b/config/config.go
-index 9439361..1301534 100644
+index 82464d3..99517c8 100644
 --- a/config/config.go
 +++ b/config/config.go
-@@ -121,24 +121,6 @@ func LoadConfig(dir string) (*Config, error) {
+@@ -143,24 +143,6 @@ func LoadConfig(dir string) (*Config, error) {
  func InitConfig(dir string, force bool) error {
  	cfg := NewConfig(dir)
-
+ 
 -	// if force, we should remove everything to start from the scratch.
 -	if force {
 -		err := os.RemoveAll(dir)

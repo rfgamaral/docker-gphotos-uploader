@@ -1,5 +1,5 @@
 diff --git a/cmd/http.go b/cmd/http.go
-index bc04f1f..f72083d 100644
+index bc04f1f..827ab08 100644
 --- a/cmd/http.go
 +++ b/cmd/http.go
 @@ -90,9 +90,11 @@ func obtainOAuthTokenFromAuthServer(ctx context.Context, oauth2Config oauth2.Con
