@@ -29,24 +29,26 @@ Make sure the Docker daemon is running and then start the container like this:
 ```
 docker run -d \
     --name=gphotos-uploader \
-    -e GPU_SCHEDULE="0 */8 * * *" \
+    -e GPU_SCHEDULE="<SCHEDULE_EXPRESSION>" \
+    -p <EXTERNAL_PORT>:29070 \
     -v <PATH_TO_CONFIGURATION>:/config \
     -v <PATH_TO_PHOTOS_LIBRARY>:/photos \
     --restart unless-stopped \
     rfgamaral/gphotos-uploader
 ```
 
-Once the container is running and before `gphotos-uploader-cli` is able to work properly, you'll need to first edit the `/config/config.hsjon` and set your `APIAppCredentials` according to the [Authentication](#authentication) section below. Please refer to the official [documentation](https://github.com/nmrshll/gphotos-uploader-cli/blob/master/.docs/configuration.md) for all other configuration options.
+Once the container is running and before `gphotos-uploader-cli` is able to work properly, you'll first need to edit the `/config/config.hsjon` and set your `APIAppCredentials` according to the [Authentication](#authentication) section below. Please refer to the official [documentation](https://github.com/nmrshll/gphotos-uploader-cli/blob/master/.docs/configuration.md) for all other configuration options.
 
 ### Container configuration parameters
 
 Please refer to the following table for all available configuration paramaters that can be passed at run-time to container images:
 
-| Parameter | Description |
-| :----: | --- |
-| `-e GPU_SCHEDULE="0 */8 * * *"` | Background task schedule expression (defaults to every 8 hours).<br>See [crontab.guru](https://crontab.guru/) for help with the schedule expression. |
-| `-v <PATH_TO_CONFIGURATION>:/config` | Absolute host path to store `gphotos-uploader-cli` configuration. |
-| `-v <PATH_TO_PHOTOS_LIBRARY>:/photos` | Absolute host path for the photos library source folder. |
+| Parameter | Required | Description |
+| :----: | --- | --- |
+| `-e GPU_SCHEDULE="<SCHEDULE_EXPRESSION>"` | | Background task schedule expression (defaults to every 8 hours).<br>See [crontab.guru](https://crontab.guru/) for help with the schedule expression. |
+| `-p <EXTERNAL_PORT>:29070` | <div align="center">✔</div> | Publish the container's `29070` internal port to the host as `<EXTERNAL_PORT>`.<br>This is necessary for the Authentication process (more on that below). |
+| `-v <PATH_TO_CONFIGURATION>:/config` | <div align="center">✔</div> | Absolute host path to store `gphotos-uploader-cli` configuration. |
+| `-v <PATH_TO_PHOTOS_LIBRARY>:/photos` | <div align="center">✔</div> | Absolute host path for the photos library source folder. |
 
 ## Authentication
 
@@ -57,10 +59,10 @@ Given that `gphotos-uploader-cli` uses OAuth 2 to access Google APIs, authentica
 Before you can use `gphotos-uploader-cli`, you must enable the Photos Library API and request an OAuth 2.0 Client ID.
 
 1. Make sure you're logged in into the Google Account where your photos should be uploaded to.
-2. Start by [creating a new project](https://console.cloud.google.com/projectcreate) in Google Cloud Platform and give it a name (example: _Google Photos Uploader_).
+2. Start by [creating a new project](https://console.cloud.google.com/projectcreate) in Google Cloud Platform and give it a name (e.g., _Google Photos Uploader_).
 3. Enable the [Google Photos Library API](https://console.cloud.google.com/apis/library/photoslibrary.googleapis.com) by clicking the <kbd>ENABLE</kbd> button.
-4. Configure the [OAuth consent screen](https://console.cloud.google.com/apis/credentials/consent) by setting the application name (example: _docker-gphotos-uploader_) and then click the <kbd>Save</kbd> button on the bottom.
-5. Create [credentials](https://console.cloud.google.com/apis/credentials) by clicking the **Create credentials → OAuth client ID** option, then pick **Other** as the application type and give it a name (example: _gphotos-uploader-cli_).
+4. Configure the [OAuth consent screen](https://console.cloud.google.com/apis/credentials/consent) by setting the application name (e.g., _docker-gphotos-uploader_) and then click the <kbd>Save</kbd> button on the bottom.
+5. Create [credentials](https://console.cloud.google.com/apis/credentials) by clicking the **Create credentials → OAuth client ID** option, then pick **Other** as the application type and give it a name (e.g., _gphotos-uploader-cli_).
 6. Copy the **Client ID** and the **Client Secret** and keep them ready to use in the next section.
 
 ### CLI authentication
@@ -73,46 +75,36 @@ _The following steps assume the container has been created and it's running. If 
 2. Open your favorite terminal and run the following command to start the authentication process:
 
     ```
-    docker exec -it gphotos-uploader oauth.sh start
+    docker exec -it gphotos-uploader run
     ```
 
 3. You should get an output similiar to this one:
 
     ```
-    2019/02/05 09:22:23 Error finding credential
-    2019/02/05 09:22:23 Need to log login into account <ACCOUNT_EMAIL>
-    2019/02/05 09:22:25 You will now be taken to your browser for authentication or open the url below in a browser.
-    2019/02/05 09:22:25 https://accounts.google.com/o/oauth2/auth?access_type=offline&client_id=<API_CLIENT_ID>&login_hint=<ACCOUNT_EMAIL>&redirect_uri=http%3A%2F%2F127.0.0.1%3A14565%2Foauth%2Fcallback&response_type=code&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fphotoslibrary&state=<STATE>
-    2019/02/05 09:22:25 If you are opening the url manually on a different machine you will need to curl the result url on this machine manually.
-    2019/02/05 09:22:26 Failed to open browser, you MUST do the manual process.
-    2019/02/05 09:22:26 Authentication will be cancelled in 120 seconds
+    2019/10/04 16:58:50 Token has not been retrieved from token store: failed retrieving token from keyring
+    2019/10/04 16:58:50 Openning browser to complete authorization.
+    2019/10/04 16:58:50 Browser was not detected. Complete the authorization browsing to: http://localhost:29070
     ```
 
-    Open the the authentication URL in your main browser and allow _docker-gphotos-uploader_ access to your Google Account to "View and manage your Google Photos library".
-4. You're now supposed to be redirected to a page that **will not load**. You'll get a message like "unable to connect" or "this site can't be reached", depending on your browser. Worry not, just copy the URL from the browser address bar and run the following command on a **new terminal** window:
+    Open the authorization URL in your main browser and allow **docker-gphotos-uploader** access to your Google Account to "View and manage your Google Photos library". Please note that you'll have to replace `localhost` with the Docker host network IP address if accessing from a different machine in your local network.
+
+4. Once the authentication process is complete you should get a green box with "Success!" with an additional message saying that you are authenticated and your terminal window should output something similiar to the following:
 
     ```
-    docker exec -it gphotos-uploader oauth.sh store-token "<URL_COPIED_FROM_ADDRESS_BAR>"
+    2019/10/04 17:00:22 Token expiration: 2019-10-04 18:00:22.9833634 +0000 UTC m=+3692.306522601
+    2019/10/04 17:00:23 all uploads done
+    2019/10/04 17:00:23 all deletions done
+    2019/10/04 17:00:23 leveldb: closed
     ```
 
-    _Please notice the double quotes surrounding the URL, do not remove these._
-
-5. Once the previous step is done, you should've got the following output on your **first terminal** window:
-
-    ```
-    2019/02/05 09:37:41 stored token for user: <ACCOUNT_EMAIL>
-    2019/02/05 09:37:41 Shutting down server...
-    Server gracefully stopped
-    ```
-
-The authentication process is now complete and and `gphotos-uploader-cli` is ready to run upload your photos on the background.
+The authentication process is now complete and `gphotos-uploader-cli` is ready to upload your photos on the background.
 
 ## Support Information
 
 ### Force run `gphotos-uploader-cli` upload task:
 
 ```
-docker exec -it gphotos-uploader gphotos-uploader-cli
+docker exec -it gphotos-uploader run
 ```
 
 ### Shell access whilst the container is running:

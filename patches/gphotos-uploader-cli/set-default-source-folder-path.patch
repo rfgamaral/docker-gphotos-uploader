@@ -1,0 +1,13 @@
+diff --git a/config/config.go b/config/config.go
+index 82464d3..3b6ce60 100644
+--- a/config/config.go
++++ b/config/config.go
+@@ -24,7 +24,7 @@ func defaultSettings() *Config {
+ 	c.Jobs = make([]FolderUploadJob, 0)
+ 	job := FolderUploadJob{
+ 		Account:      "youremail@gmail.com",
+-		SourceFolder: "~/folder/to/upload",
++		SourceFolder: "/photos",
+ 		MakeAlbums: MakeAlbums{
+ 			Enabled: true,
+ 			Use:     "folderNames",

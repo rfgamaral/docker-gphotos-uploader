@@ -1,0 +1,29 @@
+diff --git a/datastore/tokenstore/repository_keyring.go b/datastore/tokenstore/repository_keyring.go
+index a31c545..262d65f 100644
+--- a/datastore/tokenstore/repository_keyring.go
++++ b/datastore/tokenstore/repository_keyring.go
+@@ -2,11 +2,8 @@ package tokenstore
+ 
+ import (
+ 	"encoding/json"
+-	"fmt"
+-	"os"
+ 
+ 	"github.com/99designs/keyring"
+-	"golang.org/x/crypto/ssh/terminal"
+ 	"golang.org/x/oauth2"
+ )
+ 
+@@ -121,11 +118,5 @@ func (r *KeyringRepository) getToken(email string) (oauth2.Token, error) {
+ }
+ 
+ func terminalPrompt(prompt string) (string, error) {
+-	fmt.Printf("%s: ", prompt)
+-	b, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+-	if err != nil {
+-		return "", err
+-	}
+-	fmt.Println()
+-	return string(b), nil
++	return string(""), nil
+ }
