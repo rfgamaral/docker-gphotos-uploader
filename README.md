@@ -52,7 +52,7 @@ Please refer to the following table for all available configuration paramaters t
 
 ## Authentication
 
-Given that `gphotos-uploader-cli` uses OAuth 2 to access Google APIs, authentication is a bit tricky and envolves a few manual steps. Please follow the guide below carefully, to give `gphotos-uploader-cli` the required access to your Google Photos account.
+Given that `gphotos-uploader-cli` uses OAuth 2 to access Google APIs, authentication is a bit tricky and involves a few manual steps. Please follow the guide below carefully, to give `gphotos-uploader-cli` the required access to your Google Photos account.
 
 ### API credentials
 
@@ -71,14 +71,14 @@ Once an OAuth 2.0 Client ID is generated, authenticating `gphotos-uploader-cli` 
 
 _The following steps assume the container has been created and it's running. If not, please refer to the [create and start the container](#create-and-start-the-container) section above before continuing._
 
-1. Open the `/config/config.hsjon` file and set both the `ClientID` and `ClientSecret` options to the ones generated on the previous section and your the `jobs[0].account` option to the Google Account e-mail address where your photos should be uploaded to.
+1. Open the `/config/config.hsjon` file and set both the `ClientID` and `ClientSecret` options to the ones generated in the previous section and your the `jobs[0].account` option to the Google Account e-mail address where your photos should be uploaded to.
 2. Open your favorite terminal and run the following command to start the authentication process:
 
     ```
     docker exec -it gphotos-uploader run
     ```
 
-3. You should get an output similiar to this one:
+3. You should get an output similar to this one:
 
     ```
     2019/10/04 16:58:50 Token has not been retrieved from token store: failed retrieving token from keyring
@@ -88,7 +88,7 @@ _The following steps assume the container has been created and it's running. If 
 
     Open the authorization URL in your main browser and allow **docker-gphotos-uploader** access to your Google Account to "View and manage your Google Photos library". Please note that you'll have to replace `localhost` with the Docker host network IP address if accessing from a different machine in your local network.
 
-4. Once the authentication process is complete you should get a green box with "Success!" with an additional message saying that you are authenticated and your terminal window should output something similiar to the following:
+4. Once the authentication process is complete you should get a green box with "Success!" with an additional message saying that you are authenticated and your terminal window should output something similar to the following:
 
     ```
     2019/10/04 17:00:22 Token expiration: 2019-10-04 18:00:22.9833634 +0000 UTC m=+3692.306522601
@@ -121,4 +121,4 @@ docker logs -f gphotos-uploader
 
 ## License
 
-Use of this source code is governed by an MIT-style license that can be found in the [LICENSE](LICENSE) file.
+The use of this source code is governed by an MIT-style license that can be found in the [LICENSE](LICENSE) file.
