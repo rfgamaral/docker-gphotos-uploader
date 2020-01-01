@@ -37,7 +37,7 @@ docker run -d \
     rfgamaral/gphotos-uploader
 ```
 
-Once the container is running and before `gphotos-uploader-cli` is able to work properly, you'll first need to edit the `/config/docker/config.hsjon` and set your `APIAppCredentials` according to the [Authentication](#authentication) section below. Please refer to the official [documentation](https://github.com/nmrshll/gphotos-uploader-cli/blob/master/.docs/configuration.md) for all other configuration options.
+Once the container is running and before `gphotos-uploader-cli` is able to work properly, you'll first need to edit the `/config/config.hsjon` and set your `APIAppCredentials` according to the [Authentication](#authentication) section below. Please refer to the official [documentation](https://github.com/nmrshll/gphotos-uploader-cli/blob/master/.docs/configuration.md) for all other configuration options.
 
 ### Container configuration parameters
 
@@ -71,7 +71,7 @@ Once an OAuth 2.0 Client ID is generated, authenticating `gphotos-uploader-cli` 
 
 _The following steps assume the container has been created and it's running. If not, please refer to the [create and start the container](#create-and-start-the-container) section above before continuing._
 
-1. Open the `/config/docker/config.hsjon` file and set both the `ClientID` and `ClientSecret` options to the ones generated in the previous section and your the `jobs[0].account` option to the Google Account e-mail address where your photos should be uploaded to.
+1. Open the `/config/config.hsjon` file and set both the `ClientID` and `ClientSecret` options to the ones generated in the previous section and your the `jobs[0].account` option to the Google Account e-mail address where your photos should be uploaded to.
 2. Open your favorite terminal and run the following command to start the authentication process:
 
     ```

@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv sh
 
-GPHOTOS_UPLOADER_CONFIG_FILE=/config/docker/config.hjson
+GPHOTOS_UPLOADER_CONFIG_FILE=/config/config.hjson
 
 if [ ! -f "${GPHOTOS_UPLOADER_CONFIG_FILE}" ]; then
     gphotos-uploader-cli init

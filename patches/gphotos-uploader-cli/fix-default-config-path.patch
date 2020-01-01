@@ -7,7 +7,7 @@ index cf1b603..137a381 100644
  	// DefaultHomeGPhotosUploaderCLIFolder is the default .gphotos-uploader-cli home
  	// folder where to store specific configurations
 -	DefaultHomeGPhotosUploaderCLIFolder = "~/.gphotos-uploader-cli"
-+	DefaultHomeGPhotosUploaderCLIFolder = "/config/docker"
++	DefaultHomeGPhotosUploaderCLIFolder = "/config"
  )
  
  // GlobalFlags is the flags that contains the global flags
