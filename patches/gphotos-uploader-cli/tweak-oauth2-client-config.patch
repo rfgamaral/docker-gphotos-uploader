@@ -1,19 +1,13 @@
-diff --git a/cmd/http.go b/cmd/http.go
-index bc04f1f..827ab08 100644
---- a/cmd/http.go
-+++ b/cmd/http.go
-@@ -90,9 +90,11 @@ func obtainOAuthTokenFromAuthServer(ctx context.Context, oauth2Config oauth2.Con
- 	eg.Go(func() error {
- 		defer close(ready)
- 		token, err = oauth2cli.GetToken(ctx, oauth2cli.Config{
--			OAuth2Config:           oauth2Config,
--			LocalServerReadyChan:   ready,
--			LocalServerSuccessHTML: successPage,
-+			OAuth2Config:             oauth2Config,
-+			LocalServerReadyChan:     ready,
-+			LocalServerSuccessHTML:   successPage,
-+			LocalServerAddress:       "0.0.0.0",
-+			LocalServerPort:          []int{29070},
+diff --git a/app/oauth.go b/app/oauth.go
+index 554c3d0..f157c18 100644
+--- a/app/oauth.go
++++ b/app/oauth.go
+@@ -90,6 +90,8 @@ func (app *App) obtainOAuthTokenFromAuthServer(ctx context.Context, oauth2Config
+ 			OAuth2Config:           oauth2Config,
+ 			LocalServerReadyChan:   ready,
+ 			LocalServerSuccessHTML: successPage,
++			LocalServerAddress:     "0.0.0.0",
++			LocalServerPort:        []int{29070},
  		})
  		return err
  	})

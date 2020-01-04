@@ -81,21 +81,13 @@ _The following steps assume the container has been created and it's running. If 
 3. You should get an output similar to this one:
 
     ```
-    2019/10/04 16:58:50 Token has not been retrieved from token store: failed retrieving token from keyring
-    2019/10/04 16:58:50 Openning browser to complete authorization.
-    2019/10/04 16:58:50 Browser was not detected. Complete the authorization browsing to: http://localhost:29070
+    [info]   Opening browser to complete authorization.
+    [warn]   Browser was not detected. Complete the authorization browsing to: http://localhost:29070
     ```
 
     Open the authorization URL in your main browser and allow **docker-gphotos-uploader** access to your Google Account to "View and manage your Google Photos library". Please note that you'll have to replace `localhost` with the Docker host network IP address if accessing from a different machine in your local network.
 
-4. Once the authentication process is complete you should get a green box with "Success!" with an additional message saying that you are authenticated and your terminal window should output something similar to the following:
-
-    ```
-    2019/10/04 17:00:22 Token expiration: 2019-10-04 18:00:22.9833634 +0000 UTC m=+3692.306522601
-    2019/10/04 17:00:23 all uploads done
-    2019/10/04 17:00:23 all deletions done
-    2019/10/04 17:00:23 leveldb: closed
-    ```
+4. Once the authentication process is complete you should get a green box with "Success!".
 
 The authentication process is now complete and `gphotos-uploader-cli` is ready to upload your photos on the background.
 
